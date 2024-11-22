@@ -47,8 +47,35 @@ Sumber dataset: https://www.kaggle.com/datasets/bharath011/heart-disease-classif
 - troponin	=	Konsentrasi Troponin dalam ng/mL, protein yang meningkat saat terjadi kerusakan pada otot jantung.
 - class	object	Kategori hasil diagnosis: Negative (kelas 0, tidak ada serangan jantung) dan Positive (kelas 1, ada serangan jantung).
 
-kondisi data yang akan digunakan sebagai berikut:
+##kondisi data yang akan digunakan sebagai berikut:
+### Data Columns (Total: 9 columns)
 
+| #   | Column        | Non-Null Count | Dtype   |
+|-----|---------------|----------------|---------|
+| 0   | age           | 1319 non-null  | int64   |
+| 1   | gender        | 1319 non-null  | int64   |
+| 2   | impluse       | 1319 non-null  | int64   |
+| 3   | pressurehight | 1319 non-null  | int64   |
+| 4   | pressurelow   | 1319 non-null  | int64   |
+| 5   | glucose       | 1319 non-null  | float64 |
+| 6   | kcm           | 1319 non-null  | float64 |
+| 7   | troponin      | 1319 non-null  | float64 |
+| 8   | class         | 1319 non-null  | object  |
+
+### Data Summary
+
+dilihat pada data dibawah ini tidak terdapat missing values sehingga data siap digunakan
+| #   | Column        | Count |
+|-----|---------------|-------|
+| 0   | age           |   0   |
+| 1   | gender        |   0   | 
+| 2   | impluse       |   0   |
+| 3   | pressurehight |   0   |
+| 4   | pressurelow   |   0   |
+| 5   | glucose       |   0   |
+| 6   | kcm           |   0   |
+| 7   | troponin      |   0   |
+| 8   | class         |   0   |
 
 ## Data Preparation
 Pada tahap ini, dilakukan beberapa tahapan untuk mempersiapkan dataset sebelum digunakan dalam model machine learning.
@@ -78,48 +105,66 @@ dikearenakan adanya ketidakseimbangan data, maka dilakukan balancing data menggu
 Random Forest adalah algoritma ensemble yang menggunakan banyak pohon keputusan (decision trees) untuk membuat keputusan yang lebih akurat dan stabil. Algoritma ini bekerja dengan membangun beberapa pohon keputusan secara acak dan menggabungkan hasilnya untuk mendapatkan keputusan akhir. Dalam kasus klasifikasi, keputusan akhir dibuat dengan cara voting mayoritas (class dengan suara terbanyak). Model ini memiliki beberapa keuntungan seperti menghindari overfitting dan memberikan hasil yang lebih stabil.
 
 parameter parameter yang digunakan dalam model ini yaitu:
-    n_estimator = 100, Menentukan jumlah pohon keputusan yang digunakan dalam model.
-    random_state = 42, Mengontrol konsistensi hasil dengan memastikan proses acak tetap sama.
+1. n_estimator = 100, Menunjukkan jumlah pohon keputusan yang digunakan dalam hutan acak. Semakin banyak pohon, semakin baik hasil yang dihasilkan (pada titik tertentu)
+2. random_state = 42, Menjamin bahwa pembagian data dan pembuatan model dapat direplikasi, sehingga hasilnya konsisten setiap kali dijalankan.
+
 - SVM (Support Vector Machine):
+
 Support Vector Machine (SVM) adalah algoritma klasifikasi yang berfokus pada pencarian hyperplane terbaik yang memisahkan kelas-kelas dalam dataset. SVM mencoba untuk menemukan batas yang memaksimalkan margin antara kelas yang berbeda. SVM sangat efektif untuk dataset dengan dimensi tinggi dan memiliki kemampuan untuk menangani data non-linear jika kernel yang tepat digunakan.
 
 parameter parameter yang digunakan pada model ini:
-    kernel = 'linear', Memilih fungsi pemisah data berupa garis lurus atau hyperplane.
-    C=1, Mengatur keseimbangan antara akurasi pelatihan dan margin keputusan untuk meminimalkan overfitting.
+1. kernel = 'linear',  Kernel linear digunakan untuk mencari hyperplane yang memisahkan dua kelas dalam ruang fitur. Kernel ini cocok jika data relatif linier dan tidak memerlukan pemetaan ke ruang dimensi yang lebih tinggi.
+
+2. C=1, Parameter ini mengontrol margin kesalahan (penalti untuk kesalahan klasifikasi). Nilai C yang lebih tinggi dapat membuat model lebih ketat (lebih sedikit margin kesalahan) tetapi juga berisiko overfitting.
+
 ## Evaluation
-Metrik Evaluasi:
-    - Accuracy: Persentase prediksi yang benar dari keseluruhan prediksi.
-    - Precision: Proporsi prediksi positif yang benar.
-    - Recall: Kemampuan model mendeteksi kelas positif.
-    - F1-score: Harmonic mean dari precision dan recall, ideal untuk data yang tidak seimbang.
+Metrik Evaluasi yang digunakan yaitu:
+1. Accuracy
+
+Accuracy adalah persentase prediksi yang benar dari keseluruhan prediksi yang dibuat oleh model. Metrik ini memberikan gambaran umum seberapa sering model memprediksi dengan benar.
+Rumus: Accuracy = (True Positives + True Negatives) / Total Predictions
+
+2. Precision
+
+Precision adalah proporsi dari prediksi positif yang benar, atau seberapa akurat model saat memprediksi kelas positif. Dalam konteks penyakit jantung, ini berarti berapa banyak dari prediksi bahwa seseorang menderita penyakit jantung (kelas 1) yang benar-benar menderita penyakit tersebut.
+Rumus: Precision = True Positives / (True Positives + False Positives)
+
+3. Recall
+
+Recall adalah kemampuan model untuk mendeteksi semua kelas positif yang sebenarnya. Dalam kasus penyakit jantung, recall mengukur seberapa baik model dalam mendeteksi pasien yang benar-benar mengidap penyakit jantung.
+Rumus: Recall = True Positives / (True Positives + False Negatives)
+
+4. F1-Score
+
+F1-Score adalah rata-rata harmonis antara precision dan recall. Metrik ini digunakan untuk memberikan gambaran lebih seimbang antara precision dan recall, terutama ketika ada ketidakseimbangan antara kedua metrik tersebut.
+Rumus: F1-Score = 2 × (Precision × Recall) / (Precision + Recall)
+
+
 Hasil Evaluasi: 
-Random Forest - Train Set Accuracy: 1.0000
-Random Forest - Test Set Accuracy: 0.9684
-Random Forest Classification Report:
-               precision    recall  f1-score   support
+1. Random Forest
+   - Train Set Accuracy: 1.0000
+   - Test Set Accuracy: 0.9747
+   - Random Forest Classification Report:
 
-           0       0.97      0.98      0.98       102
-           1       0.96      0.95      0.95        56
+                       precision    recall  f1-score   support
+                    0       0.97      0.99      0.98       102
+                    1       0.98      0.95      0.96        56
+             accuracy                           0.97       158
+            macro avg       0.98      0.97      0.97       158
+         weighted avg       0.97      0.97      0.97       158
+2. SVM
+   - Train Set Accuracy: 0.9225
+   - Test Set Accuracy: 0.9304
+   - SVM Classification Report:
 
-    accuracy                           0.97       158
-    macro avg       0.97      0.96      0.97       158
-    weighted avg       0.97      0.97      0.97       158
+                       precision    recall  f1-score   support
+                    0       0.95      0.94      0.95       102
+                    1       0.89      0.91      0.90        56
+             accuracy                           0.93       158
+            macro avg       0.92      0.93      0.92       158
+         weighted avg       0.93      0.93      0.93       158
 
-Train Set Accuracy: 1.0000 (Model sangat cocok dengan data pelatihan, tetapi ini bisa menunjukkan overfitting jika model sangat akurat pada data latih dan kurang baik pada data uji.)
-Test Set Accuracy: 0.9747 (Model berhasil memprediksi kelas dengan akurasi yang sangat tinggi pada data uji.)
-
-SVM - Train Set Accuracy: 0.7310
-SVM - Test Set Accuracy: 0.7152
-
-SVM Classification Report:
-               precision    recall  f1-score   support
-
-           0       0.81      0.74      0.77       102
-           1       0.58      0.68      0.63        56
-
-    accuracy                           0.72       158
-    macro avg       0.70      0.71      0.70       158
-    weighted avg       0.73      0.72      0.72       158
-
-terlihat bahwa algoritma model random forest memiliki akurasi yang lebih baik, bisa dilihat pada data diatas
-hal ini berarti akan mampu mengidentifikasi penyakit jantung lebih akurat, sesuai goals yang akan diraih pada proyek ini
+kesimpulan: 
+1. Model yang dikembangkan dengan menggunakan algoritma Random Forest dan SVM berhasil memprediksi kemungkinan penyakit jantung berdasarkan data medis yang telah dipersiapkan. Hasil evaluasi menunjukkan bahwa model Random Forest sangat akurat, dengan akurasi mencapai 97% pada data uji. Ini menunjukkan bahwa model telah berhasil menjawab problem statement dengan memberikan prediksi yang akurat terkait penyakit jantung.
+2. Berdasarkan hasil evaluasi, model Random Forest mencapai akurasi 97% pada data uji, yang lebih tinggi dibandingkan dengan model SVM yang hanya mencapai 71% pada data uji. Selain itu, precision, recall, dan F1-score pada Random Forest juga menunjukkan kinerja yang sangat baik, mengindikasikan bahwa model ini dapat mengidentifikasi pasien dengan risiko penyakit jantung secara akurat. Hal ini menunjukkan bahwa model tersebut berhasil mencapai tujuan yang diharapkan, yaitu meningkatkan akurasi prediksi untuk pengambilan keputusan klinis.
+3. Penggunaan Random Forest sebagai solusi utama terbukti memberikan dampak signifikan terhadap akurasi dan efektivitas prediksi penyakit jantung. Dengan menggunakan teknik SMOTE untuk menangani ketidakseimbangan data, model ini tidak hanya dapat mengidentifikasi pasien dengan risiko tinggi, tetapi juga memberikan hasil yang lebih stabil dan dapat diandalkan dibandingkan dengan model lain seperti SVM. Ini menunjukkan bahwa solusi yang diterapkan berdampak positif dalam meningkatkan performa model dan mendukung pengambilan keputusan medis yang lebih cepat dan akurat.
