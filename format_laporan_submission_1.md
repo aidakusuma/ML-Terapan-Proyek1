@@ -53,18 +53,27 @@ kondisi data yang akan digunakan sebagai berikut:
 ## Data Preparation
 Pada tahap ini, dilakukan beberapa tahapan untuk mempersiapkan dataset sebelum digunakan dalam model machine learning.
 - Handling Missing Values
-  Dataset ini tidak mengandung missing values, yang telah diperiksa menggunakan fungsi isnull().sum(). Hasil pemeriksaan menunjukkan bahwa tidak ada nilai yang hilang pada dataset, sehingga tidak perlu dilakukan penanganan lebih lanjut untuk missing values.
+
+Dataset ini tidak mengandung missing values, yang telah diperiksa menggunakan fungsi isnull().sum(). Hasil pemeriksaan menunjukkan bahwa tidak ada nilai yang hilang pada dataset, sehingga tidak perlu dilakukan penanganan lebih lanjut untuk missing values.
 - Outlier Detection and Removal
+
 Outlier dideteksi menggunakan boxplot pada fitur numerik tertentu seperti age, impluse, pressurehight, pressurelow, glucose, kcm, dan troponin. Data yang terdeteksi sebagai outlier, berdasarkan metode Interquartile Range (IQR), dihapus menggunakan fungsi remove_outliers(). Fungsi ini menghitung batas bawah dan atas berdasarkan kuartil pertama (Q1) dan kuartil ketiga (Q3) untuk menentukan apakah data termasuk outlier.
+
 Jumlah data sebelum dan setelah penghapusan outlier:
+
 Sebelum penghapusan, jumlah data adalah 1319.
+
 Setelah penghapusan, jumlah data menjadi 789.
+
 Persentase data yang dihapus: Data yang dihapus akibat outlier mencapai 40.18%.
 - Feature Engineering
+
 Setelah penghapusan outlier, dilakukan scaling pada data menggunakan RobustScaler untuk mengurangi pengaruh outlier yang mungkin masih ada. Hasil dari proses scaling ini kemudian dikembalikan ke dalam bentuk DataFrame dengan nama kolom yang sama, untuk mempersiapkan data sebelum digunakan dalam model machine learning.
 - Split Data
+
 Pada tahap Split Data, dataset dibagi menjadi dua bagian utama: training data dan testing data. 80% untuk training data dan 20% untuk testing data.
 - Balancing Data
+
 dikearenakan adanya ketidakseimbangan data, maka dilakukan balancing data menggunakan teknik seperti SMOTE (Synthetic Minority Over-sampling Technique) atau undersampling pada kelas mayoritas. Hal ini untuk memastikan model machine learning tidak bias terhadap kelas yang lebih dominan.
   
 ## Modeling
