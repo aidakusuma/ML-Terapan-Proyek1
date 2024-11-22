@@ -58,13 +58,9 @@ Dataset ini tidak mengandung missing values, yang telah diperiksa menggunakan fu
 - Outlier Detection and Removal
 
 Outlier dideteksi menggunakan boxplot pada fitur numerik tertentu seperti age, impluse, pressurehight, pressurelow, glucose, kcm, dan troponin. Data yang terdeteksi sebagai outlier, berdasarkan metode Interquartile Range (IQR), dihapus menggunakan fungsi remove_outliers(). Fungsi ini menghitung batas bawah dan atas berdasarkan kuartil pertama (Q1) dan kuartil ketiga (Q3) untuk menentukan apakah data termasuk outlier.
-
 Jumlah data sebelum dan setelah penghapusan outlier:
-
 Sebelum penghapusan, jumlah data adalah 1319.
-
 Setelah penghapusan, jumlah data menjadi 789.
-
 Persentase data yang dihapus: Data yang dihapus akibat outlier mencapai 40.18%.
 - Feature Engineering
 
@@ -77,13 +73,17 @@ Pada tahap Split Data, dataset dibagi menjadi dua bagian utama: training data da
 dikearenakan adanya ketidakseimbangan data, maka dilakukan balancing data menggunakan teknik seperti SMOTE (Synthetic Minority Over-sampling Technique) atau undersampling pada kelas mayoritas. Hal ini untuk memastikan model machine learning tidak bias terhadap kelas yang lebih dominan.
   
 ## Modeling
-Membangun beberapa model klasifikasi:
-- Random Forest: Algoritma ensemble yang kuat untuk mengatasi overfitting.
+- Random Forest:
+
+Random Forest adalah algoritma ensemble yang menggunakan banyak pohon keputusan (decision trees) untuk membuat keputusan yang lebih akurat dan stabil. Algoritma ini bekerja dengan membangun beberapa pohon keputusan secara acak dan menggabungkan hasilnya untuk mendapatkan keputusan akhir. Dalam kasus klasifikasi, keputusan akhir dibuat dengan cara voting mayoritas (class dengan suara terbanyak). Model ini memiliki beberapa keuntungan seperti menghindari overfitting dan memberikan hasil yang lebih stabil.
+
 parameter parameter yang digunakan dalam model ini yaitu:
     n_estimator = 100, Menentukan jumlah pohon keputusan yang digunakan dalam model.
     random_state = 42, Mengontrol konsistensi hasil dengan memastikan proses acak tetap sama.
-- SVM (Support Vector Machine): Algoritma yang efektif untuk data yang tidak linear.
-    parameter parameter yang digunakan pada model ini:
+- SVM (Support Vector Machine):
+Support Vector Machine (SVM) adalah algoritma klasifikasi yang berfokus pada pencarian hyperplane terbaik yang memisahkan kelas-kelas dalam dataset. SVM mencoba untuk menemukan batas yang memaksimalkan margin antara kelas yang berbeda. SVM sangat efektif untuk dataset dengan dimensi tinggi dan memiliki kemampuan untuk menangani data non-linear jika kernel yang tepat digunakan.
+
+parameter parameter yang digunakan pada model ini:
     kernel = 'linear', Memilih fungsi pemisah data berupa garis lurus atau hyperplane.
     C=1, Mengatur keseimbangan antara akurasi pelatihan dan margin keputusan untuk meminimalkan overfitting.
 ## Evaluation
@@ -104,6 +104,9 @@ Random Forest Classification Report:
     accuracy                           0.97       158
     macro avg       0.97      0.96      0.97       158
     weighted avg       0.97      0.97      0.97       158
+
+Train Set Accuracy: 1.0000 (Model sangat cocok dengan data pelatihan, tetapi ini bisa menunjukkan overfitting jika model sangat akurat pada data latih dan kurang baik pada data uji.)
+Test Set Accuracy: 0.9747 (Model berhasil memprediksi kelas dengan akurasi yang sangat tinggi pada data uji.)
 
 SVM - Train Set Accuracy: 0.7310
 SVM - Test Set Accuracy: 0.7152
